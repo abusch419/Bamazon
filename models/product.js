@@ -1,11 +1,29 @@
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
     // build models
 
     const Product = sequelize.define("Product", {
-        name: DataTypes.STRING,
-        department: DataTypes.STRING,
-        name: DataTypes.INTEGER,
-        department: DataTypes.INTEGER,
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        department: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        price: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        stock: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+
         
-    })
+    },
+        {
+            freezeTableName: true,
+            timestamps: false,
+        })
+    return Product
 }

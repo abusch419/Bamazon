@@ -37,70 +37,12 @@
 
     </div>
 
+
+
+
     <!-- Custom Script -->
+    <script src="js/app.js" type="text/javascript"></script>
 
-    <script type="text/javascript">
-
-        const products = [
-            {
-                name: "prod1",
-                price: 1
-            },
-            {
-                name: "prod2",
-                price: 2
-            },
-            {
-                name: "prod3",
-                price: 3
-            }
-        ]
-
-        function createCard(arr) {
-            for (let i = 0; i < arr.length; i++) {
-
-                const productCard =
-`<div class="col-lg-4">
-    <div class="card">
-        <div class="card-header" id="product-name-${i}">
-            ${arr[i].name}
-        </div>
-        <div class="card-body">
-            <div class="form-group">
-                <label for="qty" class="col-sm-6 col-form-label" id="price-${i}"> ${arr[i].price}</label>
-                <div class="col-sm-6">
-                    <input type="number" class="form-control" id="qty" placeholder="Qty">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>`
-                $(".row").append(productCard)
-            }
-
-        }
-
-        createCard(products);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    </script>
 
 </body>
 

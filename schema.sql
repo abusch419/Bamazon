@@ -9,6 +9,8 @@ CREATE TABLE Product (
     department VARCHAR (150) NOT NULL,
     price INTEGER NOT NULL,
     stock INTEGER NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
     PRIMARY KEY (id)
 )
 
