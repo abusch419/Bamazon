@@ -10,6 +10,33 @@ module.exports = function (app) {
         });
       });
 
+      app.get("/api/products/:id", function (req, res) {
+        db.Product.findAll({
+          where: {
+            id: req.params.id
+          }
+        }).then(function (results) {
+          res.json(results);
+        });
+      });
+
+      app.put("/api/products/", function (req, res) {
+        db.Product.update({
+          stock: newQty,
+        },
+        {
+          where: {
+            id: req.body.id
+          }
+        }).then(function() {
+          res.json({message: "Update success!"})
+        }).catch(function(err) {
+          res.json({error: err})
+        })
+      });
+    
+
+
 
     // more to come
 }
