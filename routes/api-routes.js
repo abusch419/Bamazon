@@ -20,20 +20,23 @@ module.exports = function (app) {
         });
       });
 
-      app.put("/api/products/", function (req, res) {
-        db.Product.update({
-          stock: newQty,
-        },
+      app.put("/api/products/:id", function (req, res) {
+        db.Product.update(
+          req.body,
         {
           where: {
-            id: req.body.id
+            id: req.params.id
           }
         }).then(function() {
+          
           res.json({message: "Update success!"})
         }).catch(function(err) {
           res.json({error: err})
         })
       });
+
+
+       
     
 
 

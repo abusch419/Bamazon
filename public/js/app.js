@@ -1,9 +1,15 @@
 
 
+
 $(document).ready(function () {
 
+
     $(document).on("click", "#purchase-button", purchaseItem)
-   
+
+
+
+
+
     // initial products array
     var products = []
     // display products on site immediatelywhen page loads
@@ -20,34 +26,34 @@ $(document).ready(function () {
             products = data;
             console.log(products[0].stock)
             if (qty <= parseInt(products[0].stock)) {
-                
+
                 showModal("If you are sure you would like to make this purchase please press confirm.", products[0].name, `$${products[0].price}.99`)
+                updateStock(products, qty)
             }
             else if (qty >= parseInt(products[0].stock)) {
                 showModal("We are sorry, that item is sold out.", products[0].name, "")
             }
         })
-        
+
     }
 
-    $("#confirm").on("click", function(e) {
-        e.preventDefault()
-        updateStock(products, qty)
-    })
+
 
 
 
 
     // create modal function
 
-    function updateStock (products, qty) {
+    function updateStock(products, qty) {
         console.log("updating")
+        console.log(products)
         newQty = products[0].stock -= qty;
+        console.log(newQty);
         $.ajax({
-            methos: "PUT",
-            url: "/api/products/",
-            data: newQty
-        }).then(getProducts)
+            method: "PUT",
+            url: "/api/products/" + products[0].id,
+            data: {stock: newQty}
+        })
     }
 
 
@@ -73,7 +79,7 @@ $(document).ready(function () {
 
         </div>
     </div>`
-    $(modal).modal("toggle");
+        $(modal).modal("toggle");
     }
 
     // search for the product
@@ -116,3 +122,6 @@ $(document).ready(function () {
     }
 
 })
+
+
+
