@@ -47,7 +47,28 @@ $(document).ready(function () {
 
 
     }
+    function showAddModal(message) {
+        var modal = ` <div id="purchaseModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
 
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">
+                       ${message}
+                    </h3>
+                </div>
+                <div class="modal-body img-responsive">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="confirm">Confirm</button>
+                </div>
+            </div>
+
+        </div>
+    </div>`
+        $(modal).modal("toggle");
+    }
 
     function addItem() {
         var newProduct = {
@@ -56,7 +77,7 @@ $(document).ready(function () {
             stock: $(`.qty[data-id="data-qty"]`).val(),
             department: $(`.department[data-id="data-department"]`).val(),
         }
-        $.post("/api/products", newProduct)
+        $.post("/api/products", newProduct).then(showAddModal("Product Added!"))
             
 
 

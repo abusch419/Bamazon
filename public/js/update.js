@@ -1,52 +1,49 @@
 
 
 
-$(document).ready(function () {
-
-    $(".save").on("click", refreshProducts)
-    
-
-
-
-
-
-    // initial products array
-    var products = []
-    // display products on site immediatelywhen page loads
-    getProducts();
-
-    // when purchase button is clicked - check if item is out of stock or not
-
-
-  
-
-
     // search for the product
-    function getProducts() {
-        $.get("/api/products", function (data) {
-            products = data;
-            console.log()
-            $(".row").empty()
-            createCard(products)
+    $(document).on("click", ".edit-button", editItem)
+    $(document).on("click", ".save-button", UpdateItem)
+
+
+
+
+    function editItem(event) {
+        event.preventDefault()
+        var id = $(this).attr("data-id")
+        getItemToUpdate(id);
+    }
+
+
+    function getItemToUpdate(id) {
+
+        console.log(id)
+        $.get("/api/products/" + id, function (data) {
+            const productToEdit = data
+            createProductEditorCard(productToEdit)
         })
+
     }
 
     // create card from product
 
-    function createCard(items) {
+    function createProductEditorCard(item) {
+        console.log(item)
         $(".row").empty()
-        for (let i = 0; i < items.length; i++) {
-            const productCard =
-                `    <div class="col-lg-4">
+
+        const productCard =
+            `    <div class="col-lg-4">
                 <div class="card">
                     
-                    <input type="text" class="form-control name" data-stock="" placeholder="${items[i].name}" data-id="${i}">
+                    <input type="text" class="form-control name" data-stock="" placeholder="${item.name}">
                     
                     <div class="card-body">
                         <div class="form-group">
                             <form>
-                                <input type="number" class="form-control price" data-stock="" placeholder="${items[i].price}" data-id="${i}">
-                                <input type="number" class="form-control qty" data-stock="" placeholder="${items[i].stock}" data-id="${i}">
+                                <input type="number" class="form-control price" data-stock="" placeholder="${item.price}">
+                                <input type="number" class="form-control qty" data-stock="" placeholder="${item.stock}">
+                                <input type="text" class="form-control department" data-department="" placeholder="${item.department}">
+                                <button type="button" class="btn btn-danger btn-defult save-button" data-id="${item.id}">Save</button>
                                 <div class="col-sm-4">                                    
                                 </div>
                             </form>
@@ -54,45 +51,54 @@ $(document).ready(function () {
                     </div>
                 </div>
             </div>`
-            $(".row").append(productCard)
-        }
+        $(".row").append(productCard)
+
 
     }
 
 
-    function refreshProducts(event) {
-        event.preventDefault();
-        $.get("/api/products", function (data) {
-            products = data;
-            console.log()
-            $(".row").empty()
-            updateItems(products)
-        })
-    }
 
-    function updateItems(items) {
-        console.log("before the loop")
-        for (let i = 0; i < items.length; i++) {
-            var newProduct = {
-                id: items[i].id,
-                name: items[i].name = $(`.name[data-id="${i}"]`).val(),
-                price: $(`.price[data-id="${i}"]`).val(),
-                stock: $(`.qty[data-id="${i}"]`).val()
-            }
-            console.log(newProduct)
-            $.ajax({
-                method: "PUT",
-                url: "/api/products/",
-                data: newProduct
-            }).then(createCard(products))
+    function UpdateItem(item) {
+
+
+        var newProduct = {
+            id: item.id,
+            name: $(".name").val(),
+            price: $(".price").val(),
+            stock: $(".price").val(),
+            department: $(".department").val(),
 
         }
-        
-        
-        
-      }
+        console.log(newProduct)
+        $.ajax({
+            method: "PUT",
+            url: "/api/products/",
+            data: newProduct
+        }).then(showModal("Item Updated!"))
+    }
 
-})
+    
 
 
+function showModal(message) {
+    var modal = ` <div id="purchaseModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
 
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">
+                       ${message}
+                    </h3>
+                </div>
+                <div class="modal-body img-responsive">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="confirm">Confirm</button>
+                </div>
+            </div>
+
+        </div>
+    </div>`
+    $(modal).modal("toggle");
+}
