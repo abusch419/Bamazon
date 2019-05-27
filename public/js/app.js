@@ -4,7 +4,7 @@
 $(document).ready(function () {
 
 
-    $(document).on("click", "#purchase-button", purchaseItem)
+    $(document).on("click", ".purchase-button", purchaseItem)
 
 
 
@@ -21,17 +21,19 @@ $(document).ready(function () {
         event.preventDefault()
         console.log("click")
         var id = $(this).attr("data-id")
-        var qty = $("#qty").val()
+        var qty = $(`.qty[data-id="${id}"]`).val()
+        console.log(id);
+        console.log(qty);
         $.get("/api/products/" + id, function (data) {
-            products = data;
-            console.log(products[0].stock)
-            if (qty <= parseInt(products[0].stock)) {
+            const product = data;
+            console.log(product.stock)
+            if (qty <= parseInt(product.stock)) {
 
-                showModal("If you are sure you would like to make this purchase please press confirm.", products[0].name, `$${products[0].price}.99`)
-                updateStock(products, qty)
+                showModal("If you are sure you would like to make this purchase please press confirm.", product.name, `$${product.price}.99`)
+                updateStock(product, qty)
             }
-            else if (qty >= parseInt(products[0].stock)) {
-                showModal("We are sorry, that item is sold out.", products[0].name, "")
+            else if (qty >= parseInt(product.stock)) {
+                showModal("We are sorry, that item is sold out.", product.name, "")
             }
         })
 
@@ -44,14 +46,14 @@ $(document).ready(function () {
 
     // create modal function
 
-    function updateStock(products, qty) {
+    function updateStock(product, qty, id) {
         console.log("updating")
-        console.log(products)
-        newQty = products[0].stock -= qty;
+        console.log(product)
+        newQty = product.stock -= qty;
         console.log(newQty);
         $.ajax({
             method: "PUT",
-            url: "/api/products/" + products[0].id,
+            url: "/api/products/" + product.id,
             data: {stock: newQty}
         })
     }
@@ -107,8 +109,8 @@ $(document).ready(function () {
                             <form>
                                 <label for="qty" class="col-sm-4 col-form-label" id="price-${i}"> $${items[i].price}.99</label>
                                 <div class="col-sm-4">
-                                    <input type="number" class="form-control" id="qty" data-stock="" placeholder="Qty">
-                                    <button type="button" class="btn btn-primary btn-defult" id="purchase-button" data-id=${items[i].id}>Purchase</button>
+                                    <input type="number" class="form-control qty" data-stock="" placeholder="Qty" data-id="${items[i].id}">
+                                    <button type="button" class="btn btn-primary btn-defult purchase-button" data-id="${items[i].id}">Purchase</button>
                                 </div>
         
                             </form>

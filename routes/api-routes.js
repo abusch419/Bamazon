@@ -11,7 +11,7 @@ module.exports = function (app) {
       });
 
       app.get("/api/products/:id", function (req, res) {
-        db.Product.findAll({
+        db.Product.findOne({
           where: {
             id: req.params.id
           }
