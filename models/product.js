@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-    // build models
+    
 
     const Product = sequelize.define("Product", {
         name: {
@@ -16,6 +16,10 @@ module.exports = function (sequelize, DataTypes) {
         },
         stock: {
             type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        imgUrl: {
+            type: DataTypes.STRING,
             allowNull: false,
         },
 

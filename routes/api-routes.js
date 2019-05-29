@@ -1,6 +1,7 @@
 // Dependecies
 
 var db = require("../models");
+
 // Routes
 
 module.exports = function (app) {
@@ -51,8 +52,6 @@ module.exports = function (app) {
         })
       });
 
-      
-
       app.post("/api/products", function(req, res) {
         db.Product.create(req.body).then(function(dbProduct) {
           res.json(dbProduct);
@@ -68,10 +67,4 @@ module.exports = function (app) {
           res.end();
         });
       });
-       
-    
-
-
-
-    // more to come
 }
