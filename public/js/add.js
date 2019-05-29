@@ -5,21 +5,9 @@ $(document).ready(function () {
 
     $(".save").on("click", addItem)
 
-
-
-
-
-
-    // initial products array
-
-    // display products on site immediatelywhen page loads
     loadForm();
 
-
-
-
-
-    // create card from product
+    // creates product add form
 
     function loadForm() {
         $(".row").empty()
@@ -36,6 +24,7 @@ $(document).ready(function () {
                                 <input type="number" class="form-control price" placeholder="price without tax" data-id="data-price">
                                 <input type="number" class="form-control qty" placeholder="qty" data-id="data-qty">
                                 <input type="text" class="form-control department" placeholder="department" data-id="data-department">
+                                <input type="text" class="form-control imgUrl" placeholder="ImgUrl" data-id="data-image">
                                 <div class="col-sm-4">                                    
                                 </div>
                             </form>
@@ -44,14 +33,13 @@ $(document).ready(function () {
                 </div>
             </div>`
         $(".row").append(productCard)
-
-
     }
+
+    // show modal when product is added
+
     function showAddModal(message) {
         var modal = ` <div id="purchaseModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
-
-            <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title">
@@ -70,23 +58,18 @@ $(document).ready(function () {
         $(modal).modal("toggle");
     }
 
+    // adds item to database
+
     function addItem() {
         var newProduct = {
             name: $(`.name[data-id="data-name"]`).val(),
             price: $(`.price[data-id="data-price"]`).val(),
             stock: $(`.qty[data-id="data-qty"]`).val(),
             department: $(`.department[data-id="data-department"]`).val(),
+            imgUrl: $(`.imgUrl[data-id="data-image"]`).val(),
         }
         $.post("/api/products", newProduct).then(showAddModal("Product Added!"))
-            
-
-
     }
-
-
-
-
-
 })
 
 

@@ -4,21 +4,13 @@
 $(document).ready(function () {
 
     $(document).on("click", ".delete-button", DeleteItem)
-    
-    
-    
-
-
-
-
 
     // initial products array
     var products = []
     // display products on site immediatelywhen page loads
     getProducts();
 
-    // when purchase button is clicked - check if item is out of stock or not
-
+    // show modal when item is deleted
 
     function showModal(message) {
         var modal = ` <div id="purchaseModal" class="modal fade" role="dialog">
@@ -43,21 +35,18 @@ $(document).ready(function () {
         $(modal).modal("toggle");
     }
 
-    // search for the product
+    // search for the products in the databse
     function getProducts() {
         $.get("/api/products", function (data) {
             products = data;
-            console.log()
             $(".row").empty()
             createCard(products)
         })
     }
 
-    // create card from product
-
+    // create card from each product
     function createCard(items) {
         for (let i = 0; i < items.length; i++) {
-
             const productCard =
                 `    <div class="col-lg-4">
                 <div class="card">
@@ -65,6 +54,7 @@ $(document).ready(function () {
                         ${items[i].name}
                     </div>
                     <div class="card-body">
+                    <img src="${items[i].imgUrl}" alt="Product Image">
                         <div class="form-group">
                             <form>
                                 <label for="qty" class="col-sm-4 col-form-label" id="price-${i}"> $${items[i].price}.99</label>
@@ -82,13 +72,10 @@ $(document).ready(function () {
         }
 
     }
-
-   
-
+// ===========Delete Items========
     function DeleteItem(event) {
         event.preventDefault();
         var id = $(this).attr("data-id")
-        console.log("deleting")
         // console.log(product)
         $.ajax({
             method: "DELETE",
@@ -97,19 +84,10 @@ $(document).ready(function () {
         .then(getProducts, showModal("Item Deleted!"))
     }
 
-
     // ===========Update Items========
-
-
-
-
-    // search for the product
+    
     $(document).on("click", ".edit-button", editItem)
     $(document).on("click", ".save-button", UpdateItem)
-    
-
-
-
 
     function editItem(event) {
         event.preventDefault()
@@ -117,10 +95,8 @@ $(document).ready(function () {
         getItemToUpdate(id);
     }
 
-    
-    function getItemToUpdate(id) {
 
-        console.log(id)
+    function getItemToUpdate(id) {
         $.get("/api/products/" + id, function (data) {
             const productToEdit = data
             createProductEditorCard(productToEdit)
@@ -128,12 +104,10 @@ $(document).ready(function () {
 
     }
 
-    // create card from product
+    // create product editor form
 
     function createProductEditorCard(item) {
-        console.log(item)
         $(".row").empty()
-
         const productCard =
             `    <div class="col-lg-4">
                 <div class="card">
@@ -146,6 +120,7 @@ $(document).ready(function () {
                                 <input type="number" class="form-control price" data-stock="" placeholder="${item.price}">
                                 <input type="number" class="form-control qty" data-stock="" placeholder="${item.stock}">
                                 <input type="text" class="form-control department" data-department="" placeholder="${item.department}">
+                                <input type="text" class="form-control imgUrl" data-department="" placeholder="${item.imgUrl}">
                                 <button type="button" class="btn btn-danger btn-defult save-button" data-id="${item.id}">Save</button>
                                 <div class="col-sm-4">                                    
                                 </div>
@@ -155,32 +130,25 @@ $(document).ready(function () {
                 </div>
             </div>`
         $(".row").append(productCard)
-
-
     }
 
-
-
     function UpdateItem() {
-        console.log()
         var id = $(this).attr("data-id")
-
         var newProduct = {
             id: id,
             name: $(".name").val(),
             price: $(".price").val(),
             stock: $(".price").val(),
             department: $(".department").val(),
+            imgUrl: $(".imgUrl").val(),
 
         }
-        console.log(newProduct)
         $.ajax({
             method: "PUT",
             url: "/api/products/" + id,
             data: newProduct
         }).then(getProducts)
     }
-
 })
 
 
