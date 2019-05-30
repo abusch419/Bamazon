@@ -5,10 +5,43 @@ $(document).ready(function () {
 
     $(document).on("click", ".delete-button", DeleteItem)
 
-    // initial products array
+    $(".add-items").hide()
+    
     var products = []
-    // display products on site immediatelywhen page loads
-    getProducts();
+
+    renderLogIn()
+
+//    basic check password logic - never do this on the front end in real life!!
+
+    $(".login-submit").on("click", function(e) {
+        e.preventDefault() 
+        if ($("#password").val() === "RockOn!") {
+            $(".add-items").show()
+            getProducts();
+        }
+        else if($("#password").val() !== "RockOn!") {
+            alert("Incorrect Password. Please Enter RockOn!")
+        }
+    })
+
+    // login render logic
+    
+    function renderLogIn(){
+        $(".card-row").empty()
+        const logInForm = `<form class="row login">
+        <div class="form-group col-12">
+          <label for="email">Email address</label>
+          <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+        </div>
+        <div class="form-group col-12">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" placeholder="Password: RockOn!">
+        </div>
+        <button type="submit" class="btn btn-primary col-12 login-submit">Submit</button>
+          </form>`
+
+          $(".card-row").append(logInForm)
+    }
 
     // show modal when item is deleted
 
@@ -39,7 +72,7 @@ $(document).ready(function () {
     function getProducts() {
         $.get("/api/products", function (data) {
             products = data;
-            $(".row").empty()
+            $(".card-row").empty()
             createCard(products)
         })
     }
@@ -48,31 +81,29 @@ $(document).ready(function () {
     function createCard(items) {
         for (let i = 0; i < items.length; i++) {
             const productCard =
-                `    <div class="col-lg-4">
-                <div class="card">
+                `    <div class="col-lg-4 card">
+                <div>
                     <div class="card-header" id="product-name-${i}">
                         ${items[i].name}
                     </div>
                     <div class="card-body">
-                    <img src="${items[i].imgUrl}" alt="Product Image">
+                    <img id="product-image" src="${items[i].imgUrl}" alt="Product Image">
                         <div class="form-group">
-                            <form>
-                                <label for="qty" class="col-sm-4 col-form-label" id="price-${i}"> $${items[i].price}.99</label>
-                                <div class="col-sm-4">
-                                    <button type="button" class="btn btn-danger btn-defult delete-button" data-id="${items[i].id}">Delete</button>
-                                    <button type="button" class="btn btn-primary btn-defult edit-button" data-id="${items[i].id}">Edit</button>
-                                </div>
-        
+                            <form class="form-row">
+                                <label for="qty" class="col-sm-6 col-form-label price-label" id="price-${i}"> $${items[i].price}.99</label>
+                                    <button type="button" class="btn btn-danger btn-defult col-sm-6 delete-button" data-id="${items[i].id}">Delete</button>
+                                    <button type="button" class="btn btn-primary btn-defult col-sm-12 edit-button" data-id="${items[i].id}">Edit</button>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>`
-            $(".row").append(productCard)
+            $(".card-row").append(productCard)
         }
 
     }
-// ===========Delete Items========
+    // ===========Delete Items========
+
     function DeleteItem(event) {
         event.preventDefault();
         var id = $(this).attr("data-id")
@@ -107,29 +138,22 @@ $(document).ready(function () {
     // create product editor form
 
     function createProductEditorCard(item) {
-        $(".row").empty()
+        $(".card-row").empty()
         const productCard =
-            `    <div class="col-lg-4">
-                <div class="card">
-                    
-                    <input type="text" class="form-control name" data-stock="" placeholder="${item.name}">
-                    
+            `<div class="edit-card">
+                    <input type="text" class="form-control col-12 name" data-stock="" placeholder="${item.name}" data-id="data-name">
                     <div class="card-body">
-                        <div class="form-group">
-                            <form>
-                                <input type="number" class="form-control price" data-stock="" placeholder="${item.price}">
-                                <input type="number" class="form-control qty" data-stock="" placeholder="${item.stock}">
-                                <input type="text" class="form-control department" data-department="" placeholder="${item.department}">
-                                <input type="text" class="form-control imgUrl" data-department="" placeholder="${item.imgUrl}">
-                                <button type="button" class="btn btn-danger btn-defult save-button" data-id="${item.id}">Save</button>
-                                <div class="col-sm-4">                                    
-                                </div>
+                        <div class="form-group row">
+                            <form class="row"> 
+                                <input type="number" class="form-control price col-12" placeholder="${item.price}" data-id="data-price">
+                                <input type="number" class="form-control col-12 qty-edit" placeholder="${item.stock}" data-id="data-qty">
+                                <input type="text" class="form-control col-12 department" placeholder="${item.department}" data-id="data-department">
+                                <input type="text" class="form-control col-12 imgUrl" placeholder="${item.imgUrl}" data-id="data-image">
                             </form>
                         </div>
                     </div>
-                </div>
-            </div>`
-        $(".row").append(productCard)
+                </div>`
+        $(".card-row").append(productCard)
     }
 
     function UpdateItem() {

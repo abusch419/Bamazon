@@ -19,7 +19,6 @@ module.exports = function (app) {
         }).then(function (results) {
           res.json(results);
         });
-       
       });
 
       app.put("/api/products/", function (req, res) {
