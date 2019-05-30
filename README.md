@@ -16,7 +16,7 @@ https://secure-hamlet-21409.herokuapp.com/
 * [Bootstrap](https://getbootstrap.com/docs/4.3/getting-started/introduction/)
 * [jQuery](https://api.jquery.com/)
 * [Node.js](https://nodejs.org/en/docs/)
-* [Exress.js](https://expressjs.com/en/starter/installing.html)
+* [Express.js](https://expressjs.com/en/starter/installing.html)
 * [Sequelize](http://docs.sequelizejs.com/)
 * [MySQL](https://dev.mysql.com/doc/)
 
