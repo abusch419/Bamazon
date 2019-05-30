@@ -29,7 +29,7 @@ V1.0
 
 ## Screenshots
 ## Store Front
-![](./public/images/onlinemusicstore1.jpeg)
+![](./public/images/onlinemusicstore1.jpg)
 ## Manager Login
 ![](./public/images/managerlogin.png)
 ## Manager Page
