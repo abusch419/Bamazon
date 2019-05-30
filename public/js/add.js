@@ -7,32 +7,28 @@ $(document).ready(function () {
 
     loadForm();
 
-    // creates product add form
+    // creates product add form when the page loads
 
     function loadForm() {
-        $(".row").empty()
+        $(".card-row").empty()
 
         const productCard =
-            `    <div class="col-lg-4">
+            `    <div>
                 <div class="card">
-                    
                     <input type="text" class="form-control name" data-stock="" placeholder="Item Name" data-id="data-name">
-                    
                     <div class="card-body">
-                        <div class="form-group">
-                            <form>
-                                <input type="number" class="form-control price" placeholder="price without tax" data-id="data-price">
-                                <input type="number" class="form-control qty" placeholder="qty" data-id="data-qty">
-                                <input type="text" class="form-control department" placeholder="department" data-id="data-department">
-                                <input type="text" class="form-control imgUrl" placeholder="ImgUrl" data-id="data-image">
-                                <div class="col-sm-4">                                    
-                                </div>
+                        <div class="form-group row">
+                            <form class="row">
+                                <input type="number" class="form-control price col-12" placeholder="price without tax" data-id="data-price">
+                                <input type="number" class="form-control col-12 qty" placeholder="qty" data-id="data-qty">
+                                <input type="text" class="form-control col-12 department" placeholder="department" data-id="data-department">
+                                <input type="text" class="form-control col-12 imgUrl" placeholder="ImgUrl" data-id="data-image">
                             </form>
                         </div>
                     </div>
                 </div>
             </div>`
-        $(".row").append(productCard)
+        $(".card-row").append(productCard)
     }
 
     // show modal when product is added

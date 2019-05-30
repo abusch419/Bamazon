@@ -20,7 +20,7 @@ $(document).ready(function () {
             const product = data; 
             if (qty <= parseInt(product.stock)) {
 
-                showModal("If you are sure you would like to make this purchase please press confirm.", product.name, `$${product.price}.99`)
+                showModal("You made a purchase! Get ready to start rockin!", product.name, `$${product.price}.99`)
                 updateStock(product, qty)
             }
             else if (qty >= parseInt(product.stock)) {
@@ -29,7 +29,7 @@ $(document).ready(function () {
         })
     }
 
-    // create modal function
+    // create modal function to show that product was purchased
 
     function updateStock(product, qty, id) {
         newQty = product.stock -= qty;
@@ -58,7 +58,7 @@ $(document).ready(function () {
                     <h5 id="match-name">${price}</h5>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" id="confirm">Confirm</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="confirm">Close</button>
                 </div>
             </div>
 
@@ -80,26 +80,25 @@ $(document).ready(function () {
         for (let i = 0; i < items.length; i++) {
 
             const productCard =
-                `<div class="col-lg-4">
-                <div class="card">
+                `<div class="col-lg-4 card">
+                <div>
                     <div class="card-header" id="product-name-${i}">
                         ${items[i].name}
                     </div>
                     <div class="card-body">
-                    <img src="${items[i].imgUrl}" alt="Product Image">
-                        <div class="form-group">
-                            <form>
-                                <label for="qty" class="col-sm-4 col-form-label" id="price-${i}"> $${items[i].price}.99</label>
-                                <div class="col-sm-4">
-                                    <input type="number" class="form-control qty" data-stock="" placeholder="Qty" data-id="${items[i].id}">
-                                    <button type="button" class="btn btn-primary btn-defult purchase-button" data-id="${items[i].id}">Purchase</button>
-                                </div>
-                            </form>
+                    <img id="product-image" src="${items[i].imgUrl}" alt="Product Image">
+                        
                         </div>
+                        <div class="form-group">
+                            <form class="form-row">
+                                    <label for="qty" class="col-sm-6 col-xs-12 col-form-label price-label" id="price-${i}"> $${items[i].price}.99</label>
+                                    <input type="number" class="form-control col-sm-6 col-xs-12 qty" data-stock="" placeholder="Qty" data-id="${items[i].id}">
+                                    <button type="button" class="btn btn-primary btn-defult col-sm-12 col-xs-12 purchase-button" data-id="${items[i].id}">Purchase</button>
+                            </form>
                     </div>
                 </div>
             </div>`
-            $(".row").append(productCard)
+            $(".card-row").append(productCard)
         }
     }
 })
