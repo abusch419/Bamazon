@@ -19,10 +19,6 @@ This app was deployed using heroku and jawsDB.
 * [Sequelize](http://docs.sequelizejs.com/)
 * [MySQL](https://dev.mysql.com/doc/)
 
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
 ## Authors
 
 * **Alex Eversbusch** 
@@ -33,7 +29,7 @@ V1.0
 
 ## Screenshots
 ## Store Front
-![](.public/images/onlinemusicstore1.png)
+![](.public/images/onlinemusicstore1.jpg)
 ## Manager Login
 ![](./public/images/managerlogin.png)
 ## Manager Page
