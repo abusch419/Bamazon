@@ -32,12 +32,12 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 V1.0
 
 ## Screenshots
-Store Front
+##Store Front
 ![](.public/images/onlinemusicstore1.png)
-Manager Login
+##Manager Login
 ![](./public/images/managerlogin.png)
-Manager Page
+##Manager Page
 ![](./public/images/managerpage.png)
-Add Items Page
+##Add Items Page
 ![](./public/images/additempage.png)
 
